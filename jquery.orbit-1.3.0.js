@@ -27,7 +27,8 @@
       bulletThumbs: false,        // thumbnails for the bullets
       bulletThumbLocation: '',      // location from this file where thumbs will be
       afterSlideChange: $.noop,   // empty function 
-      centerBullets: true    // center bullet nav with js, turn this off if you want to position the bullet nav manually
+      centerBullets: true,    // center bullet nav with js, turn this off if you want to position the bullet nav manually
+      changeSlideCallback: false
     },
     
     activeSlide: 0,
@@ -415,6 +416,9 @@
 
         //set to correct bullet
         this.setActiveBullet();
+        if (this.options.changeSlideCallback) {
+          this.options.changeSlideCallback(this.activeSlide);
+        }
              
         //set previous slide z-index to one below what new activeSlide will be
         this.$slides
