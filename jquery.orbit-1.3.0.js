@@ -27,8 +27,7 @@
       bulletThumbs: false,        // thumbnails for the bullets
       bulletThumbLocation: '',      // location from this file where thumbs will be
       afterSlideChange: $.noop,   // empty function 
-      centerBullets: true,    // center bullet nav with js, turn this off if you want to position the bullet nav manually
-      changeSlideCallback: false
+      centerBullets: true    // center bullet nav with js, turn this off if you want to position the bullet nav manually
     },
     
     activeSlide: 0,
@@ -128,6 +127,8 @@
         this.setupBulletNav();
         this.setActiveBullet();
       }
+
+      this.$element.trigger('orbit.loaded');
     },
     
     currentSlide: function () {
@@ -206,8 +207,11 @@
       this.$rotator.css({ 
         "-webkit-transform": degreeCSS,
         "-moz-transform": degreeCSS,
-        "-o-transform": degreeCSS
+        "-o-transform": degreeCSS,
+        "transform": degreeCSS
       });
+      this.ieMatrixRotation();
+
       if(this.degrees > 180) {
         this.$rotator.addClass('move');
         this.$mask.addClass('move');
@@ -219,7 +223,38 @@
         this.$element.trigger('orbit.next');
       }
     },
-    
+
+    ieMatrixRotation: function() {
+      if (!$.browser.msie) return;
+      
+      var element = this.$rotator.get(0);
+      if (element.filters === undefined) return;
+      if (element.filters.length === 0) {
+        this.$rotator.css({
+          "filter": "progid:DXImageTransform.Microsoft.Matrix(M11=1.00000000, M12=0.00000000, M21=0.00000000, M22=1.00000000,sizingMethod='auto expand')",
+          "-ms-filter": "\"progid:DXImageTransform.Microsoft.Matrix(M11=1.00000000, M12=0.00000000, M21=0.00000000, M22=1.00000000,sizingMethod='auto expand')\"",
+          "zoom": 1
+        });
+      }
+      if (element.filters.length === 0) return;
+
+      var deg2radians = Math.PI * 2 / 360;
+      var rad = this.degrees * deg2radians ;
+      var costheta = Math.cos(rad);
+      var sintheta = Math.sin(rad);
+
+      var a = parseFloat(costheta).toFixed(8);
+      var c = parseFloat(-sintheta).toFixed(8);
+      var b = parseFloat(sintheta).toFixed(8);
+      var d = parseFloat(costheta).toFixed(8);
+
+      var filter = element.filters.item(0);
+      filter.M11 = costheta;
+      filter.M12 = -sintheta;
+      filter.M21 = sintheta;
+      filter.M22 = costheta;
+    },
+
     stopClock: function () {
       if (!this.options.timer) { 
         return false; 
@@ -416,9 +451,7 @@
 
         //set to correct bullet
         this.setActiveBullet();
-        if (this.options.changeSlideCallback) {
-          this.options.changeSlideCallback(this.activeSlide);
-        }
+        this.$element.trigger('orbit.changed_slide', [this.activeSlide]);
              
         //set previous slide z-index to one below what new activeSlide will be
         this.$slides
