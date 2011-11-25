@@ -17,9 +17,6 @@
 #featured>div,
 #featured>a { display: none; }
 
-
-
-
 /* CONTAINER
    ================================================== */
 
@@ -62,30 +59,27 @@ div.orbit>a {
    ================================================== */
 
 div.timer {
-    width: 40px;
-    height: 40px;
+    width: 12px;
+    height: 12px;
     overflow: hidden;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    opacity: .6;
+    float: left;
     cursor: pointer;
     z-index: 1001; }
 
 span.rotator {
     display: block;
-    width: 40px;
-    height: 40px;
+    width: 12px;
+    height: 12px;
     position: absolute;
     top: 0;
-    left: -20px;
-    background: url(orbit/rotator-black.png) no-repeat;
+    left: -6px;
+    background: url(orbit/rotator.png) no-repeat;
     z-index: 3; }
 
 span.mask {
     display: block;
-    width: 20px;
-    height: 40px;
+    width: 6px;
+    height: 12px;
     position: absolute;
     top: 0;
     right: 0;
@@ -96,28 +90,19 @@ span.rotator.move {
     left: 0 }
 
 span.mask.move {
-    width: 40px;
+    width: 12px;
     left: 0;
-    background: url(orbit/timer-black.png) repeat 0 0; }
+    background: url(orbit/timer.png) repeat 0 0; }
 
 span.pause {
     display: block;
-    width: 40px;
-    height: 40px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: url(orbit/pause-black.png) no-repeat;
-    z-index: 4;
-    opacity: 0; }
+    width: 12px;
+    height: 12px;
+    background: url(orbit/pause-white.png) no-repeat;
+    z-index: 4; }
 
 span.pause.active {
-    background: url(orbit/pause-black.png) no-repeat 0 -40px }
-
-div.timer:hover span.pause,
-span.pause.active {
-    opacity: 1 }
-
+    background-position: 0 -12px}
 
 /* CAPTIONS
    ================================================== */
@@ -127,8 +112,6 @@ span.pause.active {
     font-family: "HelveticaNeue", "Helvetica-Neue", Helvetica, Arial, sans-serif; }
 
 .orbit-wrapper .orbit-caption {
-    background: #000;
-    background: rgba(0,0,0,.6);
     z-index: 1000;
     color: #fff;
 	text-align: center;
@@ -168,28 +151,26 @@ div.slider-nav span.left {
    ================================================== */
 
 .orbit-bullets {
-    position: absolute;
-    z-index: 1000;
+    float: left;
     list-style: none;
-    bottom: -40px;
-    left: 50%;
-	margin-left: -50px;
-    padding: 0; }
+    height: 12px;
+    padding: 0 5px; }
 
 .orbit-bullets li {
     float: left;
-    margin-left: 5px;
+    margin: 0 2px;
     cursor: pointer;
     color: #999;
     text-indent: -9999px;
-    background: url(orbit/bullets.jpg) no-repeat 4px 0;
-    width: 13px;
+    background: url(orbit/bullets.png) no-repeat 0 0;
+    width: 12px;
     height: 12px;
+    position: relative;
     overflow: hidden; }
 
 .orbit-bullets li.active {
     color: #222;
-    background-position: -8px 0; }
+    background-position: -12px 0; }
     
 .orbit-bullets li.has-thumb {
     background: none;
