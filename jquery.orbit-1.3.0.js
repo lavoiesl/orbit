@@ -197,7 +197,7 @@
       } else {
         this.timerRunning = true;
         this.$pause.removeClass('active');
-        this.clock = setInterval(this.rotateTimer, this.options.advanceSpeed / 180);
+        this.clock = setInterval(function(){self.rotateTimer();}, this.options.advanceSpeed / 180);
       }
     },
     
